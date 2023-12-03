@@ -13,12 +13,15 @@ pub fn p1() {
         let first = unsafe { digits.find(|c| c.is_ascii_digit()).unwrap_unchecked() };
         let last = digits.rfind(|c| c.is_ascii_digit()).unwrap_or(first);
 
-        let f = std::char::encode_utf8_raw(first as u32, &mut first_buffer);
-        let l = std::char::encode_utf8_raw(last as u32, &mut last_buffer);
+        std::char::encode_utf8_raw(first as u32, &mut first_buffer);
+        std::char::encode_utf8_raw(last as u32, &mut last_buffer);
+
+        // SAFETY: Src and Dst have the same size.
+        let combined_buffer = unsafe { std::mem::transmute::<_, [u8; 2]>([first_buffer, last_buffer]) };
 
         // SAFETY: Encoded charactars are guaranteed to be valid.
         let ret = unsafe {
-            std::str::from_utf8_unchecked(&[f, l].concat())
+            std::str::from_utf8_unchecked(&combined_buffer)
                 .parse::<u32>()
                 .unwrap_unchecked()
         };
@@ -53,12 +56,14 @@ pub fn p2() {
             let first = unsafe { digits.find(|c| c.is_ascii_digit()).unwrap_unchecked() };
             let last = digits.rfind(|c| c.is_ascii_digit()).unwrap_or(first);
 
-            let f = std::char::encode_utf8_raw(first as u32, &mut first_buffer);
-            let l = std::char::encode_utf8_raw(last as u32, &mut last_buffer);
+            std::char::encode_utf8_raw(first as u32, &mut first_buffer);
+            std::char::encode_utf8_raw(last as u32, &mut last_buffer);
+
+            let combined_buffer = unsafe { std::mem::transmute::<_, [u8; 2]>([first_buffer, last_buffer]) };
 
             // SAFETY: Encoded charactars are guaranteed to be valid.
             unsafe {
-                std::str::from_utf8_unchecked(&[f, l].concat())
+                std::str::from_utf8_unchecked(&combined_buffer)
                     .parse::<u32>()
                     .unwrap_unchecked()
             }
