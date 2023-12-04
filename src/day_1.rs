@@ -17,7 +17,8 @@ pub fn p1() {
         std::char::encode_utf8_raw(last as u32, &mut last_buffer);
 
         // SAFETY: Src and Dst have the same size.
-        let combined_buffer = unsafe { std::mem::transmute::<_, [u8; 2]>([first_buffer, last_buffer]) };
+        let combined_buffer =
+            unsafe { std::mem::transmute::<_, [u8; 2]>([first_buffer, last_buffer]) };
 
         // SAFETY: Encoded charactars are guaranteed to be valid.
         let ret = unsafe {
@@ -59,7 +60,8 @@ pub fn p2() {
             std::char::encode_utf8_raw(first as u32, &mut first_buffer);
             std::char::encode_utf8_raw(last as u32, &mut last_buffer);
 
-            let combined_buffer = unsafe { std::mem::transmute::<_, [u8; 2]>([first_buffer, last_buffer]) };
+            let combined_buffer =
+                unsafe { std::mem::transmute::<_, [u8; 2]>([first_buffer, last_buffer]) };
 
             // SAFETY: Encoded charactars are guaranteed to be valid.
             unsafe {
