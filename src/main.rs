@@ -4,11 +4,14 @@
 mod day_1;
 mod day_2;
 mod day_3;
+mod day_4;
 
 fn main() {
     // day_1::p1();
     // day_1::p2();
     // day_2::p1();
     // day_2::p2();
-    day_3::p1();
+    // day_3::p1();
+    // day_4::p1();
+    day_4::p2();
 }
